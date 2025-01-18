@@ -1,21 +1,17 @@
+#include <memory>
 #include <sys/socket.h>
 
-#include "RequestHandler.hpp"
+#include "requests.hpp"
 #include "defaults.h"
 
 
-RequestHandler::RequestHandler() {
-
-}
+RequestHandler::RequestHandler() {}
 
 
-
-RequestHandler::~RequestHandler() {
-
-}
+RequestHandler::~RequestHandler() {}
 
 
-RequestHandler * instance = nullptr;
+RequestHandler * RequestHandler::instance = nullptr;
 
 
 RequestHandler * RequestHandler::getHandler() {
@@ -34,4 +30,11 @@ void RequestHandler::clearHandler() {
 }
 
 
+Request::Request() {
+    this->method = HttpMethod::GET;
+};
+Request::~Request() {};
 
+std::unique_ptr<Request> Request::create() {
+    return std::unique_ptr<Request>(new Request());  
+};

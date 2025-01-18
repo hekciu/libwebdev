@@ -1,1 +1,1 @@
-g++ -o output -lwebdev test.cpp
+g++ -o output test.cpp -lwebdev
