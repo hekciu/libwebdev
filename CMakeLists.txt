@@ -15,6 +15,7 @@ set_target_properties(webdev PROPERTIES VERSION ${PROJECT_VERSION})
 set_target_properties(webdev PROPERTIES PUBLIC_HEADER include/requests.hpp)
 
 target_include_directories(webdev PRIVATE include)
+target_include_directories(webdev PRIVATE shared)
 
 include(GNUInstallDirs)
 install(TARGETS webdev
