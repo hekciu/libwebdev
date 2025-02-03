@@ -36,6 +36,14 @@ Request::Request() {};
 Request::~Request() {};
 
 
+Request::describe
+
+
+void Request::setMethod(const HttpMethod & method) {
+    this->method = method;
+}
+
+
 std::unique_ptr<Request> Request::create(const std::string & url, LibWebDevError & error) {
     error = LibWebDevError::None;
 
@@ -50,6 +58,7 @@ std::unique_ptr<Request> Request::create(const std::string & url, LibWebDevError
         return nullptr;
     }
 
+    request->queryParams = url_to_query_params(url);
 
     return std::move(request);
 };

@@ -3,6 +3,7 @@
 #include <memory>
 #include <vector>
 #include <string>
+#include <map>
 
 #include "enums.hpp"
 
@@ -21,8 +22,9 @@ private:
 class Request {
 public:
     ~Request();
+    void describe();
     static std::unique_ptr<Request> create(const std::string & url, LibWebDevError & error);
-    void setMethod(HttpMethod method);
+    void setMethod(const HttpMethod & method);
     void addHeader(const std::string & name, const std::string & value);
 
 private:
@@ -31,8 +33,8 @@ private:
     HttpMethod method;
     Protocol protocol;
     std::string url;
-    std::vector<std::pair<std::string, std::string>> queryParams = {};
-    std::vector<std::pair<std::string, std::string>> headers = {};
+    std::map<std::string, std::string> queryParams = {};
+    std::map<std::string, std::string> headers = {};
 };
 
 

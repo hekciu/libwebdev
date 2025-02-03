@@ -7,7 +7,8 @@ int main(void) {
 
     RequestHandler * handler = RequestHandler::getHandler();
 
-    std::unique_ptr<Request> request = Request::create();
+    LibWebDevError err;
+    auto request = Request::create("http://hekciu.xyz?param1=value1&param2=value2", err);
 
     RequestHandler::clearHandler();
 }
