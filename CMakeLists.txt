@@ -9,11 +9,18 @@ set(CMAKE_CXX_STANDARD 11)
 
 add_library(webdev SHARED
     cpp/requests.cpp
+    cpp/defaults.h
+    include/requests.hpp
+    include/enums.hpp
+    shared/utils.hpp    
 )
 
 set_target_properties(webdev PROPERTIES VERSION ${PROJECT_VERSION})
-set_target_properties(webdev PROPERTIES PUBLIC_HEADER include/requests.hpp)
-set_target_properties(webdev PROPERTIES PUBLIC_HEADER include/enums.hpp)
+set_property(TARGET webdev PROPERTY
+    PUBLIC_HEADER
+    include/enums.hpp
+    include/requests.hpp
+)
 
 target_include_directories(webdev PRIVATE include)
 target_include_directories(webdev PRIVATE shared)

@@ -10,5 +10,7 @@ int main(void) {
     LibWebDevError err;
     auto request = Request::create("http://hekciu.xyz?param1=value1&param2=value2", err);
 
+    request->describe();
+
     RequestHandler::clearHandler();
 }
