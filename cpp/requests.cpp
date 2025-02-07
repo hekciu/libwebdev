@@ -8,10 +8,10 @@
 #include "utils.hpp"
 
 
-RequestHandler::RequestHandler() {}
+RequestHandler::RequestHandler() {};
 
 
-RequestHandler::~RequestHandler() {}
+RequestHandler::~RequestHandler() {};
 
 
 RequestHandler * RequestHandler::instance = nullptr;
@@ -30,6 +30,19 @@ void RequestHandler::clearHandler() {
     if (RequestHandler::instance != nullptr) {
         delete RequestHandler::instance; 
     }
+}
+
+
+void RequestHandler::validateRequest(const std::unique_ptr<Request> & request, LibWebDevError & error) {
+    error = LibWebDevError.None;
+
+    const HttpMethod methodsWithBody[] = {
+        HttpMethod.PUT,
+        HttpMethod.POST,
+        HttpMethod.PATCH
+    };
+
+    // TODO tbh std::vector may be a better option than c-style array 
 }
 
 
@@ -80,19 +93,38 @@ void Request::describe() {
         std::cout << "extensionmethod";
         break;
     }
-
     std::cout << '\n';
 
     std::cout << "query params: \n";
     for (auto const& param : this->queryParams) {
         std::cout << param.first << " -> " << param.second << '\n';
     }
+
+    std::cout << "headers: \n";
+    for (auto const& param : this->headers) {
+        std::cout << param.first << " -> " << param.second << '\n';
+    }
     std::cout << "------ request description end -----" << '\n';
-}
+};
 
 
 void Request::setMethod(const HttpMethod & method) {
     this->method = method;
+};
+
+
+void Request::addHeader(const std::string & name, const std::string & value) {
+    this->headers[name] = value;
+};
+
+
+void setPreferedStandard(const HttpStandard & standard) {
+    this->standard = standard;
+};
+
+
+void setRawBody(const std::string & raw) {
+    this->body = RequestBody::fromRaw(raw);
 }
 
 
@@ -112,4 +144,14 @@ std::unique_ptr<Request> Request::create(const std::string & url, LibWebDevError
     request->queryParams = url_to_query_params(url);
 
     return std::move(request);
+};
+
+
+RequestBody::RequestBody() {};
+
+RequestBody::~RequestBody() {};
+
+
+std::unique_ptr<RequestBody> RequestBody::fromRaw(const std::string & raw) {
+    this->raw = raw;
 };

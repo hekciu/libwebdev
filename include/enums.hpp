@@ -24,3 +24,10 @@ enum class Protocol {
     HTTPS,
     unsupported
 };
+
+
+enum class HttpStandard {
+    HTTP_1_0,
+    HTTP_1_1,
+    HTTP_2_0
+};
