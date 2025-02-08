@@ -3,7 +3,8 @@
 
 enum class LibWebDevError {
     None = 0,
-    UrlUnsupportedProtocol = 1
+    UrlUnsupportedProtocol = 100,
+    WrongMethodBody = 101
 };
 
 

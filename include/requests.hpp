@@ -50,7 +50,7 @@ public:
     static RequestHandler * getHandler();
     static void clearHandler();
 
-    std::unique_ptr<Response> send(const std::unique_ptr<Request> & request);
+    std::unique_ptr<Response> send(const std::unique_ptr<Request> & request, LibWebDevError & error);
     
 private:
     RequestHandler();

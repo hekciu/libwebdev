@@ -42,7 +42,27 @@ void RequestHandler::validateRequest(const std::unique_ptr<Request> & request, L
         HttpMethod.PATCH
     };
 
-    // TODO tbh std::vector may be a better option than c-style array 
+    if (request->body != nullptr) {
+        error = LibWebDevError.WrongMethodBody;
+        for (const HttpMethod & method : methodsWithBody) {
+            if (request->method == method) {
+                error = LibWebDevError.None;
+                break;
+            }
+        }
+        
+        if (error != LibWebDevError.None) {
+            return;
+        }
+    }
+
+}
+
+
+std::unique_ptr<Response> RequestHandler::send(const std::unique_ptr<Request> & request, LibWebDevError & error) {
+    std::string raw = request->getRaw();
+
+    cout << raw << '\n';
 }
 
 
@@ -118,14 +138,15 @@ void Request::addHeader(const std::string & name, const std::string & value) {
 };
 
 
-void setPreferedStandard(const HttpStandard & standard) {
+void Request::setPreferedStandard(const HttpStandard & standard) {
     this->standard = standard;
 };
 
 
-void setRawBody(const std::string & raw) {
+void Request::setRawBody(const std::string & raw) {
     this->body = RequestBody::fromRaw(raw);
 }
+
 
 
 std::unique_ptr<Request> Request::create(const std::string & url, LibWebDevError & error) {
